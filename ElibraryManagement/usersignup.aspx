@@ -114,7 +114,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>User ID</label>
+                                <label>Member ID</label>
                                 <div class="form-group">
                                     <asp:TextBox Class="form-control" ID="TextBox8" runat="server" placeholder="User ID"></asp:TextBox>
                                 </div>
@@ -129,7 +129,7 @@
 
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <asp:Button class="btn btn-success btn-block btn-lg" ID="Button1" runat="server" Text="Sign up" />
+                                <asp:Button class="btn btn-success btn-block btn-lg" ID="Button1" runat="server" Text="Sign up" OnClick="Button1_Click" />
                             </div>
 
                         </div>

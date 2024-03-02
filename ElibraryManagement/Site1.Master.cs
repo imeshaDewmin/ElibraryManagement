@@ -131,6 +131,8 @@ namespace ElibraryManagement
             LinkButton8.Visible = false; //book inventory link button
             LinkButton9.Visible = false; //book issue link button
             LinkButton10.Visible = false; //member management link button
+
+            Response.Redirect("homepage.aspx");
         }
 
         protected void LinkButton7_Click(object sender, EventArgs e)

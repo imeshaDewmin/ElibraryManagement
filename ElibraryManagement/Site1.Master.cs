@@ -58,6 +58,7 @@ namespace ElibraryManagement
                     LinkButton12.Visible = true; //publisher management link button
                     LinkButton8.Visible = true; //book inventory link button
                     LinkButton9.Visible = true; //book issue link button
+                    LinkButton10.Visible = true; //member management link button
                 }
             }
             catch (Exception ex)

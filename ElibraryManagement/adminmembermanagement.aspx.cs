@@ -45,6 +45,37 @@ namespace ElibraryManagement
 
         //user defined function
 
+         bool checkIfMemberExsists()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("SELECT * from member_master_tbl where member_id='" + TextBox7.Text.Trim() + "';", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+        }
+
         void getMemberbyId()
         {
             try
@@ -89,57 +120,74 @@ namespace ElibraryManagement
 
         void updateMemberStatusById(string status)
         {
-            try
+            if(checkIfMemberExsists())
             {
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
+                try
                 {
-                    con.Open();
+                    SqlConnection con = new SqlConnection(strcon);
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    SqlCommand cmd = new SqlCommand("UPDATE member_master_tbl SET account_status='" + status + "' where member_id='" + TextBox7.Text.Trim() + "'", con);
+
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    GridView1.DataBind();
+                    Response.Write("<script>alert('Member Status Updated');</script>");
+
                 }
-                SqlCommand cmd = new SqlCommand("UPDATE member_master_tbl SET account_status='"+ status + "' where member_id='" + TextBox7.Text.Trim() + "'", con);
+                catch (Exception ex)
+                {
 
-                cmd.ExecuteNonQuery();
-                con.Close();
-                GridView1.DataBind();
-                Response.Write("<script>alert('Member Status Updated');</script>");
-
+                    Response.Write("<script>alert('" + ex.Message + "');</script>");
+                }
             }
-            catch (Exception ex)
+            else
             {
-
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                Response.Write("<script>alert('Invalid member ID.');</script>");
             }
+            
         }
 
         void deleteMemberById()
         {
-            try
+            if(checkIfMemberExsists())
             {
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
+                try
                 {
-                    con.Open();
-                }
+                    SqlConnection con = new SqlConnection(strcon);
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
 
-                SqlCommand cmd = new SqlCommand("DELETE from member_master_tbl where member_id='" + TextBox7.Text.Trim() + "'",
-                    con);
+                    SqlCommand cmd = new SqlCommand("DELETE from member_master_tbl where member_id='" + TextBox7.Text.Trim() + "'",
+                        con);
 
 
-                cmd.ExecuteNonQuery();
-                con.Close();
-               
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
 
                     Response.Write("<script>alert('Member deleted successfully.');</script>");
                     clearForm();
 
                     GridView1.DataBind();
                 }
-                
-                
-            catch (Exception ex)
+
+
+                catch (Exception ex)
                 {
                     Response.Write("<script>alert('" + ex.Message + "');</script>");
+                }
+                
             }
+            else
+            {
+                Response.Write("<script>alert('Invalid member ID.');</script>");
+            }
+           
         }
 
         void clearForm()
